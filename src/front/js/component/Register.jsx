@@ -94,7 +94,7 @@ const Register = () => {
 
     return (
     <div className="c-wrapper">
-      <div className="login-form-container">
+      <div className="c-form-container">
         <div className=" mt-5 ">
             <h2 className="text-center">Register</h2>
             <form onSubmit={handleSubmit}>
