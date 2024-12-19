@@ -13,26 +13,84 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			token: null,
+			user: null,
+	
+			error: null,
+			
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
+			
+			login: async (email, password) => {
+				const resp = await fetch(process.env.BACKEND_URL + "/api/login", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						email: email,
+						password: password
+					})
+				});
+				if (resp.ok) {
+					const data = await resp.json();
+					
+					setStore({ token: data.access_token, user: data.user });
+					localStorage.setItem('user', JSON.stringify(data.user));
+					localStorage.setItem('token', data.access_token);
+				} else {
+					setStore({ error: "Invalid email or password" });
+				}
+			},
+			register: async (name, lastname, email, password, phone, address, city, state, zipcode, birthday,is_active,navigate) => {
+				try {
+				
+					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({
+							name: name,
+							lastname: lastname,
+							email: email,
+							password: password,
+							phone: phone,
+							address: address,
+							city: city,
+							state: state,
+							zipcode: zipcode,
+							birstday: birthday,
+							is_active: is_active
+						})
+					});
+					
+					if (resp.ok) {
+						const data = await resp.json();
+						setStore({ user: data.user });
+						localStorage.setItem('user', JSON.stringify(data)); 
+						navigate("/login");
+					} else {
+						const errorData = await resp.json();
+						setStore({ error: errorData.msg || "An error occurred during registration." });
+					}
+				} catch (error) {
+					console.error("Error during registration:", error);
+					setStore({ error: "An error occurred during registration." });
+				}
+			},
+			logout: () => {
+				setStore({ token: null, user: null });
+				localStorage.removeItem('token');
+				localStorage.removeItem('user');
+			}
+			,
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
 
-			getMessage: async () => {
-				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
-				}
-			},
+		
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
