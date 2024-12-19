@@ -10,18 +10,8 @@ from flask_jwt_extended import create_access_token,get_jwt_identity, jwt_require
 
 api = Blueprint('api', __name__)
 
-# Allow CORS requests to this API
 CORS(api, resources={r"/api/*": {"origins": "*"}})
 
-
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
-
-#     return jsonify(response_body), 200
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -47,7 +37,7 @@ def register():
         city = request.json.get("city", None)
         state = request.json.get("state", None)
         zipcode = request.json.get("zipcode", None)
-        birstday = request.json.get("birstday", None)
+        birthday = request.json.get("birthday", None)
         is_active = request.json.get("is_active", None)
 
         if email is None:
@@ -68,8 +58,8 @@ def register():
             return jsonify({"msg": "State is required"}), 400
         if zipcode is None:
             return jsonify({"msg": "Zipcode is required"}), 400
-        if birstday is None:
-            return jsonify({"msg": "Birstday is required"}), 400
+        if birthday is None:
+            return jsonify({"msg": "birthday is required"}), 400
         if is_active is None:
             is_active = False
 
@@ -77,7 +67,7 @@ def register():
         if user is not None:
             return jsonify({"msg": "User already exists"}), 401
 
-        user = User(email=email, password=password, name=name, lastname=lastname, phone=phone, address=address, city=city, state=state, zipcode=zipcode, birstday=birstday, is_active=is_active)
+        user = User(email=email, password=password, name=name, lastname=lastname, phone=phone, address=address, city=city, state=state, zipcode=zipcode, birthday=birthday, is_active=is_active)
         print(user)
         db.session.add(user)
         db.session.commit()
@@ -86,3 +76,13 @@ def register():
 
     except Exception as e:
         return jsonify({"msg": "Bad request"}), 500
+
+@api.route("/private", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+
+    if current_user is None:
+        return jsonify({"msg": "Missing Authorization Header"}), 401
+    
+    return jsonify(current_user), 200

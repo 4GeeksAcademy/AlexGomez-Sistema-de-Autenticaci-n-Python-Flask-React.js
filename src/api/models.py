@@ -13,7 +13,7 @@ class User(db.Model):
     city = db.Column(db.String(80), unique=False, nullable=False)
     state = db.Column(db.String(80), unique=False, nullable=False)
     zipcode = db.Column(db.String(80), unique=False, nullable=False)
-    birstday = db.Column(db.String(80), unique=False, nullable=False)
+    birthday = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
   
     def __repr__(self):
@@ -30,7 +30,7 @@ class User(db.Model):
             "city": self.city,
             "state": self.state,
             "zipcode": self.zipcode,
-            "birstday": self.birstday,
+            "birthday": self.birthday,
             "is_active": self.is_active
             
             # do not serialize the password, its a security breach

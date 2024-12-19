@@ -93,8 +93,10 @@ const Register = () => {
 
 
     return (
-        <div className="container mt-5">
-            <h2>Register</h2>
+    <div className="c-wrapper">
+      <div className="login-form-container">
+        <div className=" mt-5 ">
+            <h2 className="text-center">Register</h2>
             <form onSubmit={handleSubmit}>
                 {Object.keys(formData).map((key) => (
                     key !== "is_active" && (
@@ -131,6 +133,8 @@ const Register = () => {
                     Register
                 </button>
             </form>
+        </div>
+        </div>
         </div>
     );
 };

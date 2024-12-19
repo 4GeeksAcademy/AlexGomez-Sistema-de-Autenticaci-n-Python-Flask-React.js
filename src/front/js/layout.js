@@ -4,13 +4,10 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import AuthLayouts from "./component/AuthLayouts.jsx";
 import Login from "./component/Login.jsx";
 import Register from "./component/Register.jsx";
 import Private from "./component/Private.jsx";
@@ -30,8 +27,6 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
                         <Route path="/private" element={<Private />} />
                         <Route path="/login" element={<Login/>} />
                         <Route path="/register" element={<Register/>} />

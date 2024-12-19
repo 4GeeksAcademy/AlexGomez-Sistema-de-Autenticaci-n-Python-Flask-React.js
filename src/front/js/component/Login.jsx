@@ -40,8 +40,8 @@ function Login() {
   }, [store.token, navigate]); 
 
   return (
-    <div className="login-wrapper">
-      <div className="login-form-container">
+    <div className="c-wrapper">
+      <div className="c-form-container">
         <h2 className="login-title">Login</h2>
         <Form onSubmit={handleSubmit} className="login-form">
           <Form.Group className="mb-3" controlId="formBasicEmail">

@@ -2,22 +2,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
 			token: null,
 			user: null,
-	
 			error: null,
+			valite: null,
+			email:null
 			
 		},
 		actions: {
@@ -33,12 +22,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						password: password
 					})
 				});
+				
 				if (resp.ok) {
 					const data = await resp.json();
-					
-					setStore({ token: data.access_token, user: data.user });
+
 					localStorage.setItem('user', JSON.stringify(data.user));
 					localStorage.setItem('token', data.access_token);
+					setStore({ token: data.access_token, user: data.user });
+					
 				} else {
 					setStore({ error: "Invalid email or password" });
 				}
@@ -61,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 							city: city,
 							state: state,
 							zipcode: zipcode,
-							birstday: birthday,
+							birthday: birthday,
 							is_active: is_active
 						})
 					});
@@ -84,27 +75,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ token: null, user: null });
 				localStorage.removeItem('token');
 				localStorage.removeItem('user');
-			}
-			,
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
 			},
 
-		
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
+			getPrivate: async () => {
+				const tokenLocal = localStorage.getItem('token');
+				setStore({ token: tokenLocal });
+				const token = getStore().token;
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+				fetch(process.env.BACKEND_URL + "/api/private", {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`
+					}
+				})
+				.then(response => response.json())
+				.then(data => setStore({ email: data }))
+				.catch(error => console.log('Error:', error));
 
-				//reset the global store
-				setStore({ demo: demo });
+				console.log(getStore().email)
+				
+				
 			}
+			
+		
+			
 		}
 	};
 };
