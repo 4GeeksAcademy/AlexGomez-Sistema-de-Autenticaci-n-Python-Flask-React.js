@@ -11,6 +11,7 @@ import { Footer } from "./component/footer";
 import Login from "./component/Login.jsx";
 import Register from "./component/Register.jsx";
 import Private from "./component/Private.jsx";
+import Admin from "./component/Admin.jsx";
 
 //create your first component
 const Layout = () => {
@@ -30,6 +31,7 @@ const Layout = () => {
                         <Route path="/private" element={<Private />} />
                         <Route path="/login" element={<Login/>} />
                         <Route path="/register" element={<Register/>} />
+                        <Route path="/admin" element={<Admin />} />
                         <Route element={<h1>Not Found</h1>} path="*" />
                     </Routes>
                     <Footer />

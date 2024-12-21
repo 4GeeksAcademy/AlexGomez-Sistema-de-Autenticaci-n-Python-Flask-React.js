@@ -34,7 +34,8 @@ function Login() {
 
   useEffect(() => {
     if (store.token) {
-      
+      if (store.role === 'admin') navigate('/admin');
+      else
       navigate('/private');
     }
   }, [store.token, navigate]); 

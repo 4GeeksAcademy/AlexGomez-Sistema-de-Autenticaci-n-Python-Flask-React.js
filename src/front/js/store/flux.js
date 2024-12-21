@@ -6,7 +6,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: null,
 			error: null,
 			valite: null,
-			email:null
+			email:null,
+			role: null,
 			
 		},
 		actions: {
@@ -28,13 +29,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					localStorage.setItem('user', JSON.stringify(data.user));
 					localStorage.setItem('token', data.access_token);
-					setStore({ token: data.access_token, user: data.user });
+					setStore({ token: data.access_token, user: data.user, role: data.user.role });
 					
 				} else {
 					setStore({ error: "Invalid email or password" });
 				}
 			},
-			register: async (name, lastname, email, password, phone, address, city, state, zipcode, birthday,is_active,navigate) => {
+			register: async (name, lastname, email, password, phone, address, city, state, zipcode, birthday,is_active,role,navigate) => {
+			
+				
 				try {
 				
 					const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
@@ -53,7 +56,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 							state: state,
 							zipcode: zipcode,
 							birthday: birthday,
-							is_active: is_active
+							is_active: is_active,
+							role: role
+
 						})
 					});
 					
@@ -78,6 +83,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			getPrivate: async () => {
+				try{
 				const tokenLocal = localStorage.getItem('token');
 				setStore({ token: tokenLocal });
 				const token = getStore().token;
@@ -88,15 +94,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 						'Authorization': `Bearer ${token}`
 					}
 				})
+				
+				.then(response => {if(response.ok)response.json()})
+				.then(data => {if(data)setStore({ email: data })})
+				.catch(error => console.log('Error:', error));
+			}
+				catch (error) {
+					console.log('Error:', error);
+				}
+			
+				
+				
+			},
+			getAdmin: async () => {
+				const tokenLocal = localStorage.getItem('token');
+				setStore({ token: tokenLocal });
+				const token = getStore().token;
+
+				fetch(process.env.BACKEND_URL + "/api/admin", {
+					method: 'GET',
+					headers: {
+						'Authorization': `Bearer ${token}`
+					}
+				})
 				.then(response => response.json())
 				.then(data => setStore({ email: data }))
 				.catch(error => console.log('Error:', error));
 
-				console.log(getStore().email)
+				
 				
 				
 			}
-			
 		
 			
 		}

@@ -18,6 +18,7 @@ const Register = () => {
         zipcode: "",
         birthday: "",
         is_active: false,
+        role: "user",
     });
 
     const [errors, setErrors] = useState({});
@@ -84,6 +85,7 @@ const Register = () => {
                 formData.zipcode,
                 formData.birthday,
                 formData.is_active,
+                formData.role,
                 navigate
             );
         } else {
@@ -99,7 +101,7 @@ const Register = () => {
             <h2 className="text-center">Register</h2>
             <form onSubmit={handleSubmit}>
                 {Object.keys(formData).map((key) => (
-                    key !== "is_active" && (
+                    key !== "is_active" && key !== "role" && (
                         <div className="mb-3" key={key}>
                             <label className="form-label" htmlFor={key}>
                                 {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -129,6 +131,34 @@ const Register = () => {
                         Is Active
                     </label>
                 </div>
+                <div className="mb-3">
+                    <label className="form-label me-3">Role</label>
+                    <div className="form-check form-check-inline">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="role"
+                            id="user"
+                            value="user"
+                            checked={formData.role === "user"}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label" htmlFor="user">User</label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="role"
+                            id="admin"
+                            value="admin"
+                            checked={formData.role === "admin"}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label" htmlFor="admin">Admin</label>
+                    </div>
+                </div>
+
                 <button type="submit" className="btn btn-primary">
                     Register
                 </button>
