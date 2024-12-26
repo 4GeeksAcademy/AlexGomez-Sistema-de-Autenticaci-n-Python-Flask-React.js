@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
-import { Home } from "./pages/home";
+import { Home } from "./pages/home.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
@@ -12,6 +12,7 @@ import Login from "./component/Login.jsx";
 import Register from "./component/Register.jsx";
 import Private from "./component/Private.jsx";
 import Admin from "./component/Admin.jsx";
+import '../styles/home.css';
 
 //create your first component
 const Layout = () => {
@@ -23,10 +24,10 @@ const Layout = () => {
 
     return (
         <div>
-            <BrowserRouter basename={basename}>
+            <BrowserRouter basename={basename}  future={{ v7_startTransition: true, v7_relativeSplatPath: true}}>
                 <ScrollToTop>
                     <Navbar />
-                    <Routes>
+                    <Routes >
                         <Route element={<Home />} path="/" />
                         <Route path="/private" element={<Private />} />
                         <Route path="/login" element={<Login/>} />

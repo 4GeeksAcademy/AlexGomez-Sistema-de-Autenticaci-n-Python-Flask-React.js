@@ -38,6 +38,7 @@ function Login() {
       else
       navigate('/private');
     }
+
   }, [store.token, navigate]); 
 
   return (

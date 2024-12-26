@@ -14,10 +14,10 @@ export const Navbar = () => {
     }, [store.token]);
 
     return (
-        <nav className="navbar navbar-light bg-light">
+        <nav className="navbar navbar-light ">
             <div className="container">
-                <Link to="/">
-                    <span className="navbar-brand mb-0 h1">Home</span>
+                <Link className="btn-home" to="/">
+                    <span className="navbar-brand mb-0 fs-1">Home</span>
                 </Link>
 
                 <div className="ml-auto">

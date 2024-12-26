@@ -1,10 +1,15 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-	<footer className="footer mt-auto py-3 text-center">
-		<p>
-			Made with <i className="fa fa-heart text-danger" /> by{" "}
-			<a href="http://www.4geeksacademy.com">4Geeks Academy</a>
-		</p>
-	</footer>
+<footer className="footer-section py-4 bg-dark text-white">
+				<div className="container text-center">
+					<p>
+						This boilerplate comes with lots of documentation:{" "}
+						<a href="https://start.4geeksacademy.com/starters/react-flask" className="text-light">
+							Read documentation
+						</a>
+					</p>
+					<p>&copy; 2024 Alex Gomez. All rights reserved.</p>
+				</div>
+			</footer>
 );

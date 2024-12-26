@@ -14,7 +14,63 @@ api = Blueprint('api', __name__)
 CORS(api, resources={r"/api/*": {"origins": "*"}})
 bcrypt = Bcrypt()
 
-
+@api.route('/user', methods=['GET'])
+def get_user():
+    user = User.query.all()
+    user = list(map(lambda x: x.serialize(), user))
+    return jsonify(user), 200
+@api.route('/user/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    user = User.query.get(id)
+    if user is None:
+        raise APIException('User not found', status_code=404)
+    db.session.delete(user)
+    db.session.commit()
+    return jsonify(user.serialize()), 200
+@api.route('/user/<int:id>', methods=['PUT'])
+def update_user(id):
+    user = User.query.get(id)
+    if user is None:
+        raise APIException('User not found', status_code=404)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    name = request.json.get("name", None)
+    lastname = request.json.get("lastname", None)
+    phone = request.json.get("phone", None)
+    address = request.json.get("address", None)
+    city = request.json.get("city", None)
+    state = request.json.get("state", None)
+    zipcode = request.json.get("zipcode", None)
+    birthday = request.json.get("birthday", None)
+    is_active = request.json.get("is_active", None)
+    role = request.json.get("role", None)
+    if email is not None:
+        user.email = email
+    if password is not None:
+        user.password = password
+    if name is not None:
+        user.name = name
+    if lastname is not None:
+        user.lastname = lastname
+    if phone is not None:
+        user.phone = phone
+    if address is not None:
+        user.address = address
+    if city is not None:
+        user.city = city
+    if state is not None:
+        user.state = state
+    if zipcode is not None:
+        user.zipcode = zipcode
+    if birthday is not None:
+        user.birthday = birthday
+    if is_active is not None:
+        user.is_active = is_active
+    if role is not None:
+        user.role = role
+    db.session.commit()
+    return jsonify(user.serialize()), 200
+    
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
@@ -74,7 +130,8 @@ def register():
             is_active = False
         if role is None:
             role = "user"
-
+        # if not all([email, password, name, lastname, phone, address, city, state, zipcode, birthday]):
+        #         return jsonify({"msg": "All fields are required"}), 400
         user = User.query.filter_by(email=email).first()
         if user is not None:
             return jsonify({"msg": "User already exists"}), 401

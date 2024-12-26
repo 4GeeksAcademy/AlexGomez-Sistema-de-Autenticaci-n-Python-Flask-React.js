@@ -1,0 +1,34 @@
+.home-container {
+    font-family: 'Arial', sans-serif;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/random/1600x900/?technology');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+.features-section .card {
+    transition: transform 0.3s ease-in-out;
+}
+
+.features-section .card:hover {
+    transform: translateY(-10px);
+}
+
+.cta-section {
+    background-color: #f8f9fa;
+}
+
+.footer-section a {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+}
+
