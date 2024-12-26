@@ -9,8 +9,8 @@ export const Home = () => {
 
 	const handleSubscribe = (e) => {
 		e.preventDefault();
-		// Here you would typically call an action to handle the subscription
-		console.log(`Subscribed with email: ${email}`);
+		
+		alert(`Subscribed with email: ${email}`);
 		setEmail("");
 	};
 

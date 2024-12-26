@@ -26,6 +26,7 @@ function Login() {
     
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
+      alert('Please fill in the required fields');
     } else {
       setErrors({});
       actions.login(email, password); 
@@ -78,6 +79,7 @@ function Login() {
             Login
           </Button>
         </Form>
+        {store.error && <Alert className='text-center' variant="danger">{store.error}</Alert>}
       </div>
     </div>
   );
