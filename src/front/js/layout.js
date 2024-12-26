@@ -14,12 +14,9 @@ import Private from "./component/Private.jsx";
 import Admin from "./component/Admin.jsx";
 import '../styles/home.css';
 
-//create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
+   
     const basename = process.env.BASENAME || "";
-
     if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
 
     return (
@@ -33,7 +30,7 @@ const Layout = () => {
                         <Route path="/login" element={<Login/>} />
                         <Route path="/register" element={<Register/>} />
                         <Route path="/admin" element={<Admin />} />
-                        <Route element={<h1>Not Found</h1>} path="*" />
+                        <Route element={<h1 className="text-center h-100 p-5 m-5">Not Found 404</h1>} path="*" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

@@ -1,13 +1,9 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token,get_jwt_identity, jwt_required,  JWTManager
 from flask_bcrypt import Bcrypt
-
 
 api = Blueprint('api', __name__)
 
@@ -19,6 +15,7 @@ def get_user():
     user = User.query.all()
     user = list(map(lambda x: x.serialize(), user))
     return jsonify(user), 200
+
 @api.route('/user/<int:id>', methods=['DELETE'])
 def delete_user(id):
     user = User.query.get(id)
@@ -27,6 +24,7 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return jsonify(user.serialize()), 200
+
 @api.route('/user/<int:id>', methods=['PUT'])
 def update_user(id):
     user = User.query.get(id)
@@ -75,18 +73,13 @@ def update_user(id):
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    
     user = User.query.filter_by(email=email).first()  
 
-
-    
     if user is None or not bcrypt.check_password_hash(user.password, password):
         return jsonify({"msg": "Bad email or password"}), 401
 
-    
     userInfo = user.serialize()
     access_token = create_access_token(identity=email)
-    
     return jsonify(access_token=access_token, user=userInfo), 200
 
 @api.route("/signup", methods=["POST"])
@@ -140,9 +133,7 @@ def register():
         print(user)
         db.session.add(user)
         db.session.commit()
-
         return jsonify(user.serialize()), 201
-
     except Exception as e:
         return jsonify({"msg": "Bad request"}), 500
 
@@ -153,9 +144,7 @@ def protected():
 
     if current_user is None:
         return jsonify({"msg": "Missing Authorization Header"}), 401
-    
     return jsonify(current_user), 200
-
 
 @api.route("/admin", methods=["GET"])
 @jwt_required()
@@ -164,5 +153,4 @@ def protected_admin():
 
     if current_user is None:
         return jsonify({"msg": "Missing Authorization Header"}), 401
-    
     return jsonify(current_user), 200

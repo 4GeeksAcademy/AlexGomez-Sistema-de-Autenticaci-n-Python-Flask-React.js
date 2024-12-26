@@ -34,7 +34,4 @@ class User(db.Model):
             "birthday": self.birthday,
             "is_active": self.is_active,
             "role": self.role
-
-            
-            # do not serialize the password, its a security breach
         }

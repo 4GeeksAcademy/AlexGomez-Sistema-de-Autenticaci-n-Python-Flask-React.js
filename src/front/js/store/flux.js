@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			valite: null,
 			email: null,
 			role: null,
-			isLoading: false,  // Agregado para controlar la carga
+			isLoading: false,  
 		},
 		actions: {
 			getUsers: async () => {
@@ -18,7 +18,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (!resp.ok) throw new Error('Failed to fetch users');
 					const data = await resp.json();
 					setStore({ users: data });
-					//console.log(data);
 				} catch (error) {
 					console.error('Error fetching users:', error);
 					setStore({ error: 'Error fetching users' });
