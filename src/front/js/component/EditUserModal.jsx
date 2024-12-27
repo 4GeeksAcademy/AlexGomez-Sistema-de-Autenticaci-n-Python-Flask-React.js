@@ -49,7 +49,7 @@ const EditUserModal = ({ show, onHide, user }) => {
       formData.is_active,
       formData.role
     );
-    await actions.getUsers(); // Refresh the users list
+    await actions.getUsers(); 
     onHide();
   };
 

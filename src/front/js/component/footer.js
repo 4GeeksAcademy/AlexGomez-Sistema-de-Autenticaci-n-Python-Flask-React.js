@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 export const Footer = () => (
 <footer className="footer-section py-4 bg-dark text-white">
@@ -9,7 +9,7 @@ export const Footer = () => (
 							Read documentation
 						</a>
 					</p>
-					<p>&copy; 2024 Alex Gomez. All rights reserved.</p>
+					<p>&copy; 2024 Alex Gomez 👦. All rights reserved.</p>
 				</div>
 			</footer>
 );

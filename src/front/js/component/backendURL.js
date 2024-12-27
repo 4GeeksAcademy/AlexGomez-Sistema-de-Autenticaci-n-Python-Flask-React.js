@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 
 const Dark = ({children}) => <span className="bg-dark text-white px-1 rounded">{children}</span>;

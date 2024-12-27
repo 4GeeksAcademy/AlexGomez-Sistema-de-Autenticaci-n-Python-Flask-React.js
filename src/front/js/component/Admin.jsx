@@ -61,6 +61,7 @@ const Admin = () => {
     const getTotalUsers = () => Array.isArray(store.users) ? store.users.length : 0;
     const getActiveUsers = () => Array.isArray(store.users) ? store.users.filter(user => user.is_active).length : 0;
     const getAdminUsers = () => Array.isArray(store.users) ? store.users.filter(user => user.role === 'admin').length : 0;
+    const getUserUsers = () => Array.isArray(store.users) ? store.users.filter(user => user.role === 'user').length : 0;
 
     return (
         <>
@@ -79,8 +80,8 @@ const Admin = () => {
                 >
                     <h1 className="text-4xl font-bold mb-8 text-center text-gradient">Admin Dashboard</h1>
                 </motion.div>
-                <div className="mb-5 row">
-                    <Col md={3}>
+                <div className="mb-5 row mt-5 justify-content-center">
+                    <Col md={2}>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Card className="stat-card bg-gradient-primary text-white">
                                 <Card.Body>
@@ -91,7 +92,7 @@ const Admin = () => {
                             </Card>
                         </motion.div>
                     </Col>
-                    <Col md={3}>
+                    <Col md={2}>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Card className="stat-card bg-gradient-success text-white">
                                 <Card.Body>
@@ -102,7 +103,7 @@ const Admin = () => {
                             </Card>
                         </motion.div>
                     </Col>
-                    <Col md={3}>
+                    <Col md={2}>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Card className="stat-card bg-gradient-warning text-white">
                                 <Card.Body>
@@ -113,7 +114,18 @@ const Admin = () => {
                             </Card>
                         </motion.div>
                     </Col>
-                    <Col md={3}>
+                    <Col md={2}>
+                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                            <Card className="stat-card bg-gradient-info text-white">
+                                <Card.Body>
+                                    <i className="fas fa-user fa-3x mb-3"></i>
+                                    <Card.Title className="text-xl font-semibold">Standard Users</Card.Title>
+                                    <Card.Text className="text-4xl font-bold">{getUserUsers()}</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </motion.div>
+                    </Col>
+                    <Col md={2}>
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Card className="stat-card bg-gradient-danger text-white">
                                 <Card.Body>
@@ -133,21 +145,21 @@ const Admin = () => {
                             transition={{ duration: 0.5, delay: 0.2 }}
                         >
                             <Card className="admin-info-card mb-4 bg-gradient-info text-white">
-                                <Card.Header className="bg-transparent border-bottom-0">
+                                <Card.Header className=" border-bottom-0">
                                     <h5 className="my-4 font-bold fs-2 text-center ">Admin Information</h5>
                                 </Card.Header>
                                 <Card.Body>
-                                    <p><strong>Name:</strong> {admin.name} {admin.lastname}</p>
-                                    <p><strong>Email:</strong> {admin.email}</p>
-                                    <p><strong>Phone:</strong> {admin.phone || "Not available"}</p>
-                                    <p><strong>Address:</strong> {admin.address || "Not available"}</p>
-                                    <p><strong>City:</strong> {admin.city || "Not available"}</p>
-                                    <p><strong>State:</strong> {admin.state || "Not available"}</p>
-                                    <p><strong>Zipcode:</strong> {admin.zipcode || "Not available"}</p>
-                                    <p><strong>Birthday:</strong> {admin.birthday || "Not available"}</p>
-                                    <p><strong>Status:</strong> {admin.is_active ? 
-                                        <Badge bg="success" className="status-badge">Active</Badge> : 
-                                        <Badge bg="danger" className="status-badge">Inactive</Badge>
+                                    <p><strong className='me-2'>Name:</strong> {admin.name} {admin.lastname}</p>
+                                    <p><strong className='me-2'>Email:</strong> {admin.email}</p>
+                                    <p><strong className='me-2'>Phone:</strong> {admin.phone || "Not available"}</p>
+                                    <p><strong className='me-2'>Address:</strong> {admin.address || "Not available"}</p>
+                                    <p><strong className='me-2'>City:</strong> {admin.city || "Not available"}</p>
+                                    <p><strong className='me-2'>State:</strong> {admin.state || "Not available"}</p>
+                                    <p><strong className='me-2'>Zipcode:</strong> {admin.zipcode || "Not available"}</p>
+                                    <p><strong className='me-2'>Birthday:</strong> {admin.birthday || "Not available"}</p>
+                                    <p><strong className='me-2'>Status:</strong> {admin.is_active ? 
+                                        <Badge bg="success" className="status-badge ms-2">Active</Badge> : 
+                                        <Badge bg="danger" className="status-badge ms-2">Inactive</Badge>
                                     }</p>
                                 </Card.Body>
                             </Card>
@@ -171,7 +183,7 @@ const Admin = () => {
                                                 <th>Email</th>
                                                 <th>Role</th>
                                                 <th>Status</th>
-                                                <th>Actions</th>
+                                                <th className='ps-5'>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
